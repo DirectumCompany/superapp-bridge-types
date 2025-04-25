@@ -1,0 +1,16 @@
+{
+  "name": "@directum/superapp-bridge-types",
+  "version": "1.0.0",
+  "author": "Directum",
+  "license": "MIT",
+  "types": "index.ts",
+  "description": "Interfaces for interaction between mini-apps and Directum super-app.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DirectumCompany/superapp-bridge-types.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DirectumCompany/superapp-bridge-types/issues"
+  },
+  "homepage": "https://github.com/DirectumCompany/superapp-bridge-types#readme"
+}
