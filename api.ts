@@ -1,6 +1,7 @@
 import { AppError } from './error';
 import { NavigateOptions, SystemPath, To } from './navigation';
 import { ShowModalCallback } from './modal';
+import { ILogger } from './logger';
 
 /** Клиентское API супер-аппа. */ 
 export type SuperAppBridge = {
@@ -49,4 +50,7 @@ export type SuperAppBridge = {
     delete: (key: string) => void;
     clear: () => void;
   };
+
+  /** Функции для работы с логгером. */
+  logger: ILogger;
 };

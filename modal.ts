@@ -1,5 +1,3 @@
-import { Component } from './component';
-
 /** Функция открытия модального окна. */
 export type ShowModalCallback<TResult = unknown> = (args: ShowModalArgs<TResult>) => Promise<TResult>;
 
@@ -9,17 +7,21 @@ export type ShowModalArgs<TResult> = {
   id: string;
   /** Заголовок. */
   title?: string;
-  /** Функция рендера контента {@link RenderModalContent}. */
-  render: RenderModalContent<TResult>;
+  /** Функция монтирования контента {@link MountModalContent}. */
+  mount: MountModalContent<TResult>;
 };
 
 /**
- * Функция рендеринга контента модального окна.
+ * Функция монтирования контента модального окна.
  * @template TResult
+ * @param { Element } container Элемент DOM с содержимым модального окна.
  * @param {CloseModalCallback<TResult>} close Функция закрытия модального окна.
- * @returns {Component} Контент, который будет отображаться внутри модального окна.
+ * @returns {CleanupModalContentCallback} Функция очистки контента модального окна.
  */
-type RenderModalContent<TResult> = (close: CloseModalCallback<TResult>) => Component;
+export type MountModalContent<TResult> = (
+  container: Element,
+  close: CloseModalCallback<TResult>
+) => CleanupModalContentCallback;
 
 /**
  * Функция закрытия модального окна.
@@ -27,3 +29,8 @@ type RenderModalContent<TResult> = (close: CloseModalCallback<TResult>) => Compo
  * @param {TResult|undefined} [result] Результат, который возвращается при закрытии модального окна.
  */
 export type CloseModalCallback<TResult> = (result?: TResult) => void;
+
+/**
+ * Функция очистки контента модального окна.
+ */
+export type CleanupModalContentCallback = () => void;
