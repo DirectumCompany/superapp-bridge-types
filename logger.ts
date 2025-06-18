@@ -12,11 +12,11 @@ export type LoggerEvent = Error | AppError | string;
  * Интерфейс логгера супер-аппа.
  */
 export interface ILogger {
-  fatal: (event: LoggerEvent, payload?: unknown) => void,
-  error: (event: LoggerEvent, payload?: unknown) => void,
-  warn: (event: LoggerEvent, payload?: unknown) => void,
-  info: (event: LoggerEvent, payload?: unknown) => void,
-  debug: (event: LoggerEvent, payload?: unknown) => void,
-  trace: (event: LoggerEvent, payload?: unknown) => void,
+  fatal: (event: LoggerEvent, payload?: Record<string, string>) => void,
+  error: (event: LoggerEvent, payload?: Record<string, string>) => void,
+  warn: (event: LoggerEvent, payload?: Record<string, string>) => void,
+  info: (event: LoggerEvent, payload?: Record<string, string>) => void,
+  debug: (event: LoggerEvent, payload?: Record<string, string>) => void,
+  trace: (event: LoggerEvent, payload?: Record<string, string>) => void,
   forceFlush: () => Promise<void>,
 }
