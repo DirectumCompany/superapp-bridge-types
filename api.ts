@@ -2,6 +2,7 @@ import { AppError } from './error';
 import { NavigateOptions, SystemPath, To } from './navigation';
 import { ShowModalCallback } from './modal';
 import { ILogger } from './logger';
+import { ToastConfig } from "./toast";
 
 /** Клиентское API супер-аппа. */ 
 export type SuperAppBridge = {
@@ -53,4 +54,26 @@ export type SuperAppBridge = {
 
   /** Функции для работы с логгером. */
   logger: ILogger;
+
+  /** Функции для работы с уведомлениями. */
+  toast: {
+    /**
+     * Функция открытия уведомления.
+     * @param {ToastConfig} config - Конфигурация уведомления.
+     * @return {string|null} ID уведомления или null в случае дубликата.
+     */
+    show: (config: ToastConfig) => string | null;
+
+    /**
+     * Функция закрытия уведомления.
+     * @param {string} id - Идентификатор уведомления.
+     */
+    close: (id: string) => void;
+
+    /**
+     * Функция закрытия уведомлений по контексту.
+     * @param {string} context - Контекст уведомлений.
+     */
+    clearContext: (context: string) => void;
+  };
 };
