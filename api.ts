@@ -89,4 +89,7 @@ export type SuperAppBridge = {
    * @return {string} Абсолютный путь до объекта системы.
    */
   getHyperlink: (path: string) => string,
+  
+  /** Базовый путь до API. */
+  apiUrl: string,
 };
