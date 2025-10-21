@@ -1,5 +1,5 @@
 /** Объект для построения ссылки для перехода. */
-type Path = {
+export type Path = {
   /** Путь URL, начинающийся с «/». */
   pathname: string;
   /** Строка поиска URL, начинающаяся с символа «?». */
@@ -8,7 +8,7 @@ type Path = {
   hash: string;
 };
 
-export type To = string | Partial<Path>;
+export type To = string | number | Partial<Path>;
 
 /** Поведение относительного пути для ссылки. Навигация будет использовать иерархию маршрутов,
  * поэтому «..» удалит все сегменты URL текущего шаблона маршрута, в то время как «path» будет использовать путь URL,
@@ -40,3 +40,13 @@ export type SystemPath = {
   /** Идентификатор. */
   id: string;
 };
+
+/* Способ загрузки страницы. */
+export enum Target {
+  /* Страница будет загружена в новом окне браузера. */
+  BLANK = '_blank',
+  /* Страница загрузится в том же самом окне. */
+  SELF = '_self',
+}
+
+export type Url = string | Partial<Path> | SystemPath;

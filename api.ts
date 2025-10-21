@@ -1,5 +1,5 @@
 import { AppError } from './error';
-import { NavigateOptions, SystemPath, To } from './navigation';
+import { NavigateOptions, SystemPath, Target, To, Url } from './navigation';
 import { ShowModalCallback } from './modal';
 import { ILogger } from './logger';
 import { ToastConfig } from "./toast";
@@ -25,6 +25,13 @@ export type SuperAppBridge = {
    *  При ошибке возвращается оригинальный объект ошибки с актуализированным текстом, записанным в свойство **message** объекта.
    */
   fetch: <T>(url: string, options?: RequestInit) => Promise<T|null>;
+
+  /**
+   * Функция открытия ссылки.
+   * @param {Url} url - ссылка.
+   * @param {Target} [target=Target.BLANK] - способ загрузки страницы.
+   */
+  open: (url: Url, target?: Target) => void;
 
   /** Функции для работы с навигацией. */
   navigation: {
