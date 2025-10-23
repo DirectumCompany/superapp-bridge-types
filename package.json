@@ -1,6 +1,6 @@
 {
   "name": "@directum-omni/superapp-bridge-types",
-  "version": "1.0.8",
+  "version": "1.0.10",
   "author": "Directum",
   "license": "MIT",
   "types": "index.ts",
@@ -12,5 +12,8 @@
   "bugs": {
     "url": "https://github.com/DirectumCompany/superapp-bridge-types/issues"
   },
-  "homepage": "https://github.com/DirectumCompany/superapp-bridge-types#readme"
+  "homepage": "https://github.com/DirectumCompany/superapp-bridge-types#readme",
+  "publishConfig": {
+    "@directum-omni:registry": "https://packages.directum.ru/repository/npm-directum/"
+  }
 }
