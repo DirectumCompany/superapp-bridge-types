@@ -1,8 +1,8 @@
 import { AppError } from './error';
 import { NavigateOptions, SystemPath, Target, To, Url } from './navigation';
 import { ShowModalCallback } from './modal';
-import { ILogger } from './logger';
-import { ToastConfig } from "./toast";
+import { LoggerFactory, LogTracer } from './logger';
+import { ToastConfig } from './toast';
 
 /** Клиентское API супер-аппа. */ 
 export type SuperAppBridge = {
@@ -59,9 +59,6 @@ export type SuperAppBridge = {
     clear: () => void;
   };
 
-  /** Функции для работы с логгером. */
-  logger: ILogger;
-
   /** Функции для работы с уведомлениями. */
   toast: {
     /**
@@ -96,7 +93,13 @@ export type SuperAppBridge = {
    * @return {string} Абсолютный путь до объекта системы.
    */
   getHyperlink: (path: string) => string,
-  
+
   /** Базовый путь до API. */
   apiUrl: string,
+
+  /** Фабрика логгеров. */
+  loggerFactory: LoggerFactory;
+
+  /** Трейсер. */
+  tracer: LogTracer;
 };
