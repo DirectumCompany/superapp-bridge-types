@@ -1,4 +1,9 @@
-/** Функция открытия модального окна. */
+/**
+ * Функция открытия модального окна.
+ * @template TResult
+ * @param {ShowModalArgs<TResult>} args - Параметры модального окна {@link ShowModalArgs}.
+ * @return {Promise<TResult>} Промис с результатом, переданным в функцию закрытия {@link CloseModalCallback}.
+ */
 export type ShowModalCallback<TResult = unknown> = (args: ShowModalArgs<TResult>) => Promise<TResult>;
 
 /** Параметры открытия модального окна. */
