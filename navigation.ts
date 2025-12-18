@@ -22,6 +22,7 @@ export type SystemPath = {
   id: string;
 };
 
+/** Путь навигации для перехода. */
 export type To = string | Partial<Path> | SystemPath;
 
 /** Поведение относительного пути для ссылки. Навигация будет использовать иерархию маршрутов,
@@ -53,7 +54,7 @@ export enum Target {
 export type NavigateFunction = {
   /**
    * Функция для перехода по маршрутам супер-аппа.
-   * @param {To|SystemPath} to - Путь для перехода.
+   * @param {To} to - Путь для перехода.
    * Если путь относительный, то к нему будет добавлено имя мини-аппа для корректного перехода.
    * @param {NavigateOptions} [options] - Опции.
    */
@@ -71,4 +72,5 @@ export type NavigateFunction = {
   (delta: number): void;
 }
 
+/** Ссылка. */
 export type Url = string | Partial<Path> | SystemPath;
