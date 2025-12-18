@@ -8,7 +8,22 @@ export type Path = {
   hash: string;
 };
 
-export type To = string | number | Partial<Path>;
+/**
+ * Объект для формирования ссылки на элемент системы.
+ * Будет сформирована ссылка типа `/${systemName}/${type}/${id}`.
+ * Если не указан `systemName`, то будет открыт элемент текущего апплета.
+ */
+export type SystemPath = {
+  /** Имя системы. */
+  systemName?: string;
+  /** Тип. */
+  type: string;
+  /** Идентификатор. */
+  id: string;
+};
+
+/** Путь навигации для перехода. */
+export type To = string | Partial<Path> | SystemPath;
 
 /** Поведение относительного пути для ссылки. Навигация будет использовать иерархию маршрутов,
  * поэтому «..» удалит все сегменты URL текущего шаблона маршрута, в то время как «path» будет использовать путь URL,
@@ -28,19 +43,6 @@ export type NavigateOptions = {
   relative?: RelativeRoutingType;
 };
 
-/**
- * Объект для формирования ссылки на элемент системы.
- * Будет сформирована ссылка типа `/${systemName}/entities/${type}/${id}`.
- */
-export type SystemPath = {
-  /** Имя системы. */
-  systemName: string;
-  /** Тип. */
-  type: string;
-  /** Идентификатор. */
-  id: string;
-};
-
 /* Способ загрузки страницы. */
 export enum Target {
   /* Страница будет загружена в новом окне браузера. */
@@ -49,4 +51,26 @@ export enum Target {
   SELF = '_self',
 }
 
+export type NavigateFunction = {
+  /**
+   * Функция для перехода по маршрутам супер-аппа.
+   * @param {To} to - Путь для перехода.
+   * Если путь относительный, то к нему будет добавлено имя мини-аппа для корректного перехода.
+   * @param {NavigateOptions} [options] - Опции.
+   */
+  (to: To, options?: NavigateOptions): void;
+
+  /**
+   * Навигация по истории браузера.
+   * @param delta - Количество шагов для перемещения по истории.
+   * Положительное значение - вперед по истории, отрицательное - назад по истории.
+   * Например:
+   * navigate(-1) - вернуться на одну страницу назад.
+   * navigate(1) - перейти на одну страницу вперед.
+   * navigate(-2) - вернуться на две страницы назад.
+   */
+  (delta: number): void;
+}
+
+/** Ссылка. */
 export type Url = string | Partial<Path> | SystemPath;

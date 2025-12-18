@@ -1,22 +1,39 @@
 import { AppError } from './error';
-import { NavigateOptions, SystemPath, Target, To, Url } from './navigation';
+import { NavigateFunction, Target, Url } from './navigation';
 import { ShowModalCallback } from './modal';
 import { LoggerFactory, LogTracer } from './logger';
 import { ToastConfig } from './toast';
 
 /** Клиентское API супер-аппа. */ 
 export type SuperAppBridge = {
-  /** Функции для получения информации о приложении. */
+  /** API для получения информации о приложении. */
   application: {
+    /**
+     * Функция для получения локализации супер-аппа.
+     * @returns {string} Код строки локализации.
+     */
     getLocalization: () => string;
+
+    /**
+     * Функция для получения темы супер-аппа.
+     * @returns {string} Название темы.
+     */
     getTheme: () => string;
   };
 
-  /** Функции для работы с модальным окном. */
+  /** API для работы с модальным окном. */
   modal: {
-    show: ShowModalCallback<unknown>;
-  };
+    show: ShowModalCallback;
 
+    /**
+     * Функция закрытия модального окна.
+     * @param {string} id - Идентификатор модального окна.
+     */
+    close: (id: string) => void;
+
+    /** z-index модальных окон Omni. */
+    zIndex: number;
+  };
   /**
    * Выполняет запрос.
    * @param {string} url - адрес запроса.
@@ -33,33 +50,56 @@ export type SuperAppBridge = {
    */
   open: (url: Url, target?: Target) => void;
 
-  /** Функции для работы с навигацией. */
+  /** API для работы с навигацией. */
   navigation: {
-    /** Блокирует переход со страницы. */
+    /**
+     * Блокирует переход со страницы. При попытке перехода по ссылке после блокирования,
+     * будет отображаться окно с подтверждением перехода.
+     */
     lockNavigate: () => void;
 
-    /**
-     * Функция для перехода по маршрутам апплета.
-     * В качестве ссылки для перехода можно указать как строку, так и объект.
-     */
-    navigate: (to: To | SystemPath, options?: NavigateOptions) => void;
+    navigate: NavigateFunction;
 
     /** Убирает блокировку перехода со страницы. */
     unlockNavigate: () => void;
   };
 
-  /** Отображает ошибку. */
+  /**
+   * Функция отображения ошибки.
+   * @param {AppError} error - Ошибка.
+   */
   showError: (error: AppError) => void;
 
-  /** Функции для работы с хранилищем. */
+  /** API для работы с хранилищем. */
   storage: {
+    /**
+     * Функция для установки значения в localStorage.
+     * @param {string} key - Ключ.
+     * @param {string} value - Значение.
+     */
     set: (key: string, value: string) => void;
+
+    /**
+     * Функция получения значения из localStorage.
+     * @param {string} key - Ключ.
+     *
+     * @return {string|null} Значение.
+     */
     get: (key: string) => string | null;
+
+    /**
+     * Функция удаления значения из localStorage.
+     * @param {string} key - Ключ.
+     */
     delete: (key: string) => void;
+
+    /**
+     * Функция очистки localStorage.
+     */
     clear: () => void;
   };
 
-  /** Функции для работы с уведомлениями. */
+  /** API для работы с уведомлениями. */
   toast: {
     /**
      * Функция открытия уведомления.
@@ -80,13 +120,16 @@ export type SuperAppBridge = {
      */
     clearContext: (context: string) => void;
   };
-  /** Функции для работы с боковой панелью. */
+
+  /** API для работы с боковой панелью. */
   sidebar: {
     /** Функция закрытия боковой панели в мобильном представлении. */
     close: () => void,
+
     /** Функция открытия боковой панели в мобильном представлении. */
     open: () => void,
   },
+
   /**
    * Функция для получения абсолютного пути до объекта системы.
    * @param {string} path - Относительный путь до объекта системы.
