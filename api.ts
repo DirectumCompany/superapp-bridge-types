@@ -3,6 +3,7 @@ import { NavigateFunction, Target, Url } from './navigation';
 import { ShowModalCallback } from './modal';
 import { LoggerFactory, LogTracer } from './logger';
 import { ToastConfig } from './toast';
+import { ViewMode } from './theme';
 
 /** Клиентское API супер-аппа. */ 
 export type SuperAppBridge = {
@@ -34,6 +35,7 @@ export type SuperAppBridge = {
     /** z-index модальных окон Omni. */
     zIndex: number;
   };
+
   /**
    * Выполняет запрос.
    * @param {string} url - адрес запроса.
@@ -145,4 +147,10 @@ export type SuperAppBridge = {
 
   /** Трейсер. */
   tracer: LogTracer;
+
+  /**
+   * Функция для определения текущего режим отображения интерфейса на основе ширины контейнера.
+   * @return {ViewMode} Текущий режим отображения (desktop/tablet/mobile).
+   */
+  getContainerSize: () => ViewMode;
 };
