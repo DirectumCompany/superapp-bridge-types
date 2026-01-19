@@ -134,10 +134,19 @@ export type SuperAppBridge = {
 
   /**
    * Функция для получения абсолютного пути до объекта системы.
+   * @deprecated Используйте getEntityHyperlink
    * @param {string} path - Относительный путь до объекта системы.
    * @return {string} Абсолютный путь до объекта системы.
    */
   getHyperlink: (path: string) => string,
+
+  /**
+   * Функция для получения ссылки до карточки сущности.
+   * @param {string | number} id - Идентификатор объекта системы.
+   * @param {string} type - GUID сущности.
+   * @return {string | undefined} Абсолютный путь до карточки сущности. undefined - если url не определен в апплете.
+   */
+  getEntityHyperlink: (id: string | number, type: string) => string | undefined,
 
   /** Базовый путь до API. */
   apiUrl: string,
